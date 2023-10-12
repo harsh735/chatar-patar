@@ -13,7 +13,7 @@ import animationData from '../animations/typing.json';
 
 
 
-const ENDPOINT = "http://localhost:8000";
+const ENDPOINT = "https://chatar-patar.onrender.com/";
 var socket, selectedChatCompare;
 
 
