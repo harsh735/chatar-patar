@@ -7,7 +7,7 @@ import { useToast } from '@chakra-ui/react'
 import axios from 'axios';
 import { useHistory } from "react-router-dom";
 
-const Singup = () => {
+const Signup = () => {
 
   const [show,setShow] = useState(false);
   const [name,setName] = useState();
@@ -109,7 +109,6 @@ const Singup = () => {
       });
 
       localStorage.setItem('userInfo',JSON.stringify(data));
-      setUser(data);
       setLoading(false);
       history.push('/chats');
     }catch(error){
@@ -200,4 +199,4 @@ const Singup = () => {
   )
 }
 
-export default Singup
+export default Signup;

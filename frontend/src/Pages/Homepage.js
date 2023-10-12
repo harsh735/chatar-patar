@@ -10,7 +10,7 @@ import {
   Tabs,
 } from '@chakra-ui/react';
 import Login from '../components/Authentication/Login';
-import Signup from '../components/Authentication/Singup';
+import Signup from '../components/Authentication/Signup';
 import { useHistory } from "react-router-dom";
 
 
