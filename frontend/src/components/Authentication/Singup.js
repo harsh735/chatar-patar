@@ -109,6 +109,7 @@ const Singup = () => {
       });
 
       localStorage.setItem('userInfo',JSON.stringify(data));
+      setUser(data);
       setLoading(false);
       history.push('/chats');
     }catch(error){
