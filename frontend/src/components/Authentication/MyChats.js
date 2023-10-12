@@ -8,7 +8,7 @@ import ChatLoading from '../ChatLoading';
 import { getSender } from '../../config/ChatLogics';
 import GroupChatModal from '../Authentication/miscellaneous/GroupChatModal';
 
-const MyChats = ({fetchAgain}) => {
+const MyChats = ({ fetchAgain }) => {
   const [loggedUser, setLoggedUser] = useState();
 
   const { selectedChat, setSelectedChat, user, chats, setChats } = ChatState();
@@ -25,7 +25,7 @@ const MyChats = ({fetchAgain}) => {
       };
 
       const { data } = await axios.get("/api/chat", config);
-      console.log("chatdata",data);
+      console.log("chatdata", data);
       setChats(data);
     } catch (error) {
       toast({
@@ -43,57 +43,57 @@ const MyChats = ({fetchAgain}) => {
     setLoggedUser(JSON.parse(localStorage.getItem("userInfo")));
     fetchChats();
   }, [fetchAgain])
-  
+
 
   return (
-  
-    <Box
-        display={{ base: selectedChat ? "none" : "flex", md: "flex" }}
-        flexDir="column"
-        alignItems="center"
-        p={3}
-        h="89vh"
-        bg="white"
-        w={{ base: "100%", md: "30%" }}
-        borderRadius="lg"
-        borderWidth="1px"
-    >
-        <Box
-          pb={3}
-          px={3}
-          fontSize={{ base: "28px", md: "30px" }}
-          fontFamily="Poppins"
-          display="flex"
-          width="100%"
-          justifyContent="space-between"
-          alignItems="center"
-          color="black"
-        >
-          My Chats
-          <GroupChatModal>
-            <Button 
-              display="flex"
-              fontSize={{base: "8px", md:"10px", lg:"15px"}}
-              rightIcon={<AddIcon />}
-              justifyContent="center"
-              fontFamily="Poppins"
-            >
-              New Group Chat
-            </Button>
-          </GroupChatModal>
-        </Box>
 
-        <Box
-          display="flex"
-          flexDir="column"
-          p={3}
-          bg="#F8F8F8"
-          w="100%"
-          h="100%"
-          borderRadius="lg"
-          overflowY="hidden"
-        > 
-          {chats ? (
+    <Box
+      display={{ base: selectedChat ? "none" : "flex", md: "flex" }}
+      flexDir="column"
+      alignItems="center"
+      p={3}
+      h="89vh"
+      bg="white"
+      w={{ base: "100%", md: "30%" }}
+      borderRadius="lg"
+      borderWidth="1px"
+    >
+      <Box
+        pb={3}
+        px={3}
+        fontSize={{ base: "28px", md: "30px" }}
+        fontFamily="Poppins"
+        display="flex"
+        width="100%"
+        justifyContent="space-between"
+        alignItems="center"
+        color="black"
+      >
+        My Chats
+        <GroupChatModal>
+          <Button
+            display="flex"
+            fontSize={{ base: "8px", md: "10px", lg: "15px" }}
+            rightIcon={<AddIcon />}
+            justifyContent="center"
+            fontFamily="Poppins"
+          >
+            New Group Chat
+          </Button>
+        </GroupChatModal>
+      </Box>
+
+      <Box
+        display="flex"
+        flexDir="column"
+        p={3}
+        bg="#F8F8F8"
+        w="100%"
+        h="100%"
+        borderRadius="lg"
+        overflowY="hidden"
+      >
+        {chats ? (
           <Stack overflowY="scroll">
             {chats.map((chat) => (
               <Box
@@ -110,13 +110,22 @@ const MyChats = ({fetchAgain}) => {
                   {!chat.isGroupChat
                     ? getSender(loggedUser, chat.users)
                     : chat.chatName}
-                </Text> </Box>
+                </Text>
+                {chat.latestMessage && (
+                  <Text fontSize="xs">
+                    <b>{chat.latestMessage.sender.name} : </b>
+                    {chat.latestMessage.content.length > 50
+                      ? chat.latestMessage.content.substring(0, 51) + "..."
+                      : chat.latestMessage.content}
+                  </Text>
+                )}
+              </Box>
             ))}
           </Stack>
         ) : (
           <ChatLoading />
         )}
-        </Box>
+      </Box>
     </Box>
   );
 }
