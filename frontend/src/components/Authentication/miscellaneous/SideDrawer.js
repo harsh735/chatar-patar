@@ -21,7 +21,7 @@ import UserListItem from '../../UserAvatar/UserListItem';
 import { Spinner } from '@chakra-ui/spinner';
 import '../../../App.css';
 import { getSender } from '../../../config/ChatLogics';
-import { Effect } from 'react-notification-badge'
+// import { Effect } from 'react-notification-badge'
 // import NotificationBadge from 'react-notification-badge/lib/components/NotificationBadge';
 
 
