@@ -7,9 +7,11 @@ const chatRoutes = require('./routes/chatRoutes.js');
 const messageRoutes = require('./routes/messageRoutes.js');
 const { notFound, errorHandler } = require('../backend/middleware/errorMiddleware.js');
 const path = require('path');
+require('dotenv').config({path:path.resolve(__dirname,'./.env')})
 
-dotenv.config();
+
 connectDB();
+
 
 app.use(express.json());  //to accept json data
 

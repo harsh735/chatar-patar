@@ -19,6 +19,7 @@ const ChatProvider = ({children}) => {
         // eslint-disable-next-line
     },[history]);
 
+
     //sending all the chat context data to our sidedrawer search bar
     return (
         <ChatContext.Provider
