@@ -22,7 +22,7 @@ import { Spinner } from '@chakra-ui/spinner';
 import '../../../App.css';
 import { getSender } from '../../../config/ChatLogics';
 import { Effect } from 'react-notification-badge'
-import NotificationBadge from 'react-notification-badge/lib/components/NotificationBadge';
+// import NotificationBadge from 'react-notification-badge/lib/components/NotificationBadge';
 
 
 
@@ -143,10 +143,10 @@ const SideDrawer = () => {
       <div >
         <Menu>
           <MenuButton p={1}>
-            <NotificationBadge 
+            {/* <NotificationBadge 
               count={notification.length}
               effect={Effect.SCALE}
-            />
+            /> */}
             <BellIcon m={1} fontSize="2xl"/>
           </MenuButton>
           <MenuList pl={3} color="black">
