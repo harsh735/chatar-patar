@@ -1,66 +1,55 @@
 const express = require("express");
 const dotenv = require("dotenv");
+const cors = require("cors");  // Import cors middleware
 const app = express();
 const connectDB = require('./config/db.js');
 const userRoutes = require('./routes/userRoutes.js');
 const chatRoutes = require('./routes/chatRoutes.js');
 const messageRoutes = require('./routes/messageRoutes.js');
-const { notFound, errorHandler } = require('../backend/middleware/errorMiddleware.js');
+const { notFound, errorHandler } = require('./middleware/errorMiddleware.js');
 const path = require('path');
-require('dotenv').config({path:path.resolve(__dirname,'./.env')})
-
+require('dotenv').config({ path: path.resolve(__dirname, './.env') });
 
 connectDB();
 
+app.use(express.json());  // to accept json data
 
-app.use(express.json());  //to accept json data
+// Use the cors middleware
+app.use(cors({
+    origin: "https://chatar-patar-lemon.vercel.app",  // Replace with your Vercel app's URL
+    credentials: true,  // Include credentials like cookies in requests
+}));
 
+// creating new api endpoints through app.use
+app.use('/api/user', userRoutes);
+app.use('/api/chat', chatRoutes);
+app.use('/api/message', messageRoutes);
 
-
-//creating new api endpoints through app.use
-app.use('/api/user',userRoutes);
-app.use('/api/chat',chatRoutes);
-app.use('/api/message',messageRoutes);
-
-
-//deployment 
-
+// deployment
 const __dirname1 = path.resolve();
-if(process.env.NODE_ENV === "production"){
-    
-    app.use(express.static(path.join(__dirname1,"/frontend/build")));
+if (process.env.NODE_ENV === "production") {
+    app.use(express.static(path.join(__dirname1, "/frontend/build")));
 
-    app.get("*",(req,res) => {
-        res.sendFile(path.resolve(__dirname1,"frontend","build","index.html"));
+    app.get("*", (req, res) => {
+        res.sendFile(path.resolve(__dirname1, "frontend", "build", "index.html"));
     });
-}
-else{
-    app.get("/",(req,res) =>{
+} else {
+    app.get("/", (req, res) => {
         res.send("API is running successfully");
     });
 }
 
-
-//deployment
-
-
-//error handling function/middleware
-app.use(notFound); //if url doesn't exist then go to this function
-app.use(errorHandler); //if still some error then go to this error(not that important)
-
-app.get('/api/chat/:id',(req,res) => {
-    //console.log(req.params.id);
-    const singleChat = chats.find(c=>c._id === req.params.id);
-    res.send(singleChat);
-})
+// error handling function/middleware
+app.use(notFound); // if url doesn't exist then go to this function
+app.use(errorHandler); // if still some error then go to this error(not that important)
 
 const PORT = process.env.PORT || 8000;
-const server = app.listen(8000,console.log(`Server started on PORT : ${PORT}`));
+const server = app.listen(PORT, console.log(`Server started on PORT : ${PORT}`));
 
-const io = require('socket.io')(server,{
+const io = require('socket.io')(server, {
     pingTimeout: 60000,
     cors: {
-        origin: "http://localhost:3000",
+        origin: "https://chatar-patar-lemon.vercel.app",  // Replace with your Vercel app's URL
     },
 });
 
